@@ -53,6 +53,18 @@ class Matrix:
                 new_data[r][c] = dot_sum
         return Matrix(new_data)
 
+    def trace(self) -> float:
+        """
+        Computes the trace of the matrix (sum of diagonal elements.)
+        Complexity: O(n) where n is the number of rows/cols.
+        """
+        if not self.is_square():
+            raise ValueError("Trace is only defined for square matrices.")
+        res = 0.0
+        for i in range(self.rows):
+            res += self.data[i][i]
+        return res
+
     def scl(self, a):
         a_float = float(a)
         for r in range(self.rows):
