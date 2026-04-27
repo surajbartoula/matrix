@@ -12,7 +12,7 @@ def test_cross_product():
     u3, v3 = math_lib.vector([4., 2., -3.]), math_lib.vector([-2., -5., 16.])
     print(f"u3 X v3 = {math_lib.cross_product(u3, v3)}")
 
-def test_ex08_trace():
+def test_trace():
     print("--- Exercise 08: Trace ---")
     u1 = math_lib.matrix([
         [1., 0.],
@@ -34,6 +34,28 @@ def test_ex08_trace():
     ])
     print(f"Example 3: {u3.trace()}")
 
+def test_transpose():
+    print("--- Exercise 09: Transpose ---")
+    m1 = math_lib.matrix([
+        [1., 3.],
+        [2., 4.]
+    ])
+    print("Original 2x2:")
+    print(m1)
+    print("Transposed:")
+    print(m1.transpose())
+
+    m2 = math_lib.matrix([
+        [1., 4.],
+        [2., 5.],
+        [3., 6.]
+    ])
+    print("\nOriginal 2x3:")
+    print(m2)
+    t2 = m2.transpose()
+    print("Transpose (Should be 3x2):")
+    print(t2)
+    print(f"New shape: {t2.shape}")
 
 # def main():
 #     print("---Vector Addition---")
@@ -53,4 +75,5 @@ def test_ex08_trace():
 
 if __name__ == "__main__":
     test_cross_product()
-    test_ex08_trace()
+    test_trace()
+    test_transpose()

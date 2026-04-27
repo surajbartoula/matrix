@@ -65,6 +65,21 @@ class Matrix:
             res += self.data[i][i]
         return res
 
+    def transpose(self) -> 'Matrix':
+        """
+        Returns the transpose of the Matrix.
+        Rows become columns and columns become rows.
+        Complexity: O(nm)
+        """
+        # Original shape: (rows, cols) and new shape: (cols, rows)
+        new_data = []
+        for r in range(self.rows):
+            new_col = []
+            for c in range(self.cols):
+                new_col.append(self.data[c][r])
+            new_data.append(new_col)
+        return math_lib.matrix(new_data)
+
     def scl(self, a):
         a_float = float(a)
         for r in range(self.rows):
