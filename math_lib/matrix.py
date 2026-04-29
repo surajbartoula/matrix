@@ -3,11 +3,19 @@ import math_lib
 
 
 class Matrix:
-    def __init__(self, data):
-        # data is a list of lists: [[row1_col1, row1_col2], [row2_col1, row2_col2]]
-        self.data = [[float(item) for item in row] for row in data]
-        self.rows = len(self.data)
-        self.cols = len(self.data[0]) if self.data else 0
+    def __init__(self, data: list[list[float]]):
+        if not data or not any(data):
+            self.data = [[]]
+            self.rows = 0
+            self.cols = 0
+        else:
+            # data is a list of lists: [[row1_col1, row1_col2], [row2_col1, row2_col2]]
+            self.rows = len(data)
+            self.cols = len(data[0])
+            for i in range(self.rows):
+                if len(data[i]) != self.cols:
+                    raise ValueError(f"Row {i} has {len(data[i])} columns, expected {self.cols}")
+            self.data = [[float(item) for item in row] for row in data]
         self.shape = (self.rows, self.cols)
 
     def add(self, m):
