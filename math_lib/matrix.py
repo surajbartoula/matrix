@@ -51,7 +51,7 @@ class Matrix:
                 for i in range(self.cols):  # Inner dimensions
                     dot_sum = math.fma(self.data[r][i], m.data[i][c], dot_sum)
                 new_data[r][c] = dot_sum
-        return Matrix(new_data)
+        return self.__class__(new_data)
 
     def trace(self) -> float:
         """
@@ -72,13 +72,48 @@ class Matrix:
         Complexity: O(nm)
         """
         # Original shape: (rows, cols) and new shape: (cols, rows)
-        new_data = []
+        new_data = [
+            [self.data[c][r] for c in range(self.cols)
+                            for r in range(self.rows)]
+        ]
+        return self.__class__(new_data)
+
+    def row_echelon(self) -> 'Matrix':
+        """
+        Computes the Reduced Row Echelon Form(RREF): O(n^3)
+        """
+        rows_list = []
         for r in range(self.rows):
-            new_col = []
-            for c in range(self.cols):
-                new_col.append(self.data[c][r])
-            new_data.append(new_col)
-        return math_lib.matrix(new_data)
+            rows_list.append([self.data[c][r] for c in range(self.cols)])
+        pivot_row = 0
+        for pivot_col in range(self.cols):
+            if pivot_row >= self.rows:
+                break
+            # Step 1: Find the best row for this pivot (Partial Pivoting)
+            sel_row = pivot_row
+            while sel_row < self.rows and abs(rows_list[sel_row][pivot_col] < 1e-9):
+                sel_row += 1
+            if sel_row == self.rows: # No pivot in this column
+                continue
+            # Swap current row with sel_row
+            rows_list[pivot_row], rows_list[sel_row] = rows_list[sel_row], rows_list[pivot_row]
+            # Step 2: Normalize pivot row so pivot elements becomes 1
+            pivot_val = rows_list[pivot_row][pivot_col]
+            rows_list[pivot_row] = [x / pivot_val for x in rows_list[pivot_row]]
+            # Step 3: Eliminate all other entries in this column(above and below)
+            for r in range(self.rows):
+                if r != pivot_row:
+                    factor = rows_list[r][pivot_col]
+                    rows_list[r] = [
+                        rows_list[r][i] - factor * rows_list[pivot_row][i]
+                        for i in range(self.cols)
+                    ]
+            pivot_row += 1
+        new_col_major = []
+        for c in range(self.cols):
+            new_col = [rows_list[r][c] for r in range(self.rows)]
+            new_col_major.append(new_col)
+        return self.__class__(new_col_major)
 
     def scl(self, a):
         a_float = float(a)
