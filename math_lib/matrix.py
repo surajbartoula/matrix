@@ -99,6 +99,7 @@ class Matrix:
                 break
             # Step 1: Find the best row for this pivot (Partial Pivoting)
             sel_row = pivot_row
+            # Finiding non-zero pivot
             while sel_row < self.rows and abs(rows_list[sel_row][pivot_col]) < 1e-9:
                 sel_row += 1
             if sel_row == self.rows: # No pivot in this column
