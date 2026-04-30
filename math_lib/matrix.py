@@ -90,39 +90,36 @@ class Matrix:
         """
         Computes the Reduced Row Echelon Form(RREF): O(n^3)
         """
-        rows_list = []
-        for r in range(self.rows):
-            rows_list.append([self.data[c][r] for c in range(self.cols)])
+        matrix = [row[:] for row in self.data] # Deep copy of matrix
+        num_rows = len(matrix)
+        num_cols = len(matrix[0]) if num_rows > 0 else 0
         pivot_row = 0
-        for pivot_col in range(self.cols):
-            if pivot_row >= self.rows:
+        for pivot_col in range(num_cols):
+            if pivot_row >= num_cols:
                 break
             # Step 1: Find the best row for this pivot (Partial Pivoting)
             sel_row = pivot_row
             # Finiding non-zero pivot
-            while sel_row < self.rows and abs(rows_list[sel_row][pivot_col]) < 1e-9:
-                sel_row += 1
-            if sel_row == self.rows: # No pivot in this column
+            for r in range(pivot_row, num_rows):
+                if abs(matrix[r][pivot_col]) > abs(matrix[sel_row][pivot_col]):
+                    sel_row = r
+            # If the best candidate is effectively zero, skip this column
+            if abs(matrix[sel_row][pivot_col]) < 1e-9:
                 continue
             # Swap current row with sel_row
-            rows_list[pivot_row], rows_list[sel_row] = rows_list[sel_row], rows_list[pivot_row]
-            # Step 2: Normalize pivot row so pivot elements becomes 1
-            pivot_val = rows_list[pivot_row][pivot_col]
-            rows_list[pivot_row] = [x / pivot_val for x in rows_list[pivot_row]]
-            # Step 3: Eliminate all other entries in this column(above and below)
-            for r in range(self.rows):
+            matrix[pivot_row], matrix[sel_row] = matrix[sel_row], matrix[pivot_row]
+            # Step 2: Normalize pivot row(Leading entry becomes 1)
+            pivot_val = matrix[pivot_row][pivot_col]
+            matrix[pivot_row] = [x / pivot_val for x in matrix[pivot_row]]
+            # Step 3: Eliminate all other entries in this column
+            for r in range(num_rows):
                 if r != pivot_row:
-                    factor = rows_list[r][pivot_col]
-                    rows_list[r] = [
-                        rows_list[r][i] - factor * rows_list[pivot_row][i]
-                        for i in range(self.cols)
-                    ]
+                    factor = matrix[r][pivot_col]
+                    for c in range(pivot_col, num_cols):
+                        matrix[r][c] -= factor * matrix[pivot_row][c]
             pivot_row += 1
-        new_col_major = []
-        for c in range(self.cols):
-            new_col = [rows_list[r][c] for r in range(self.rows)]
-            new_col_major.append(new_col)
-        return self.__class__(new_col_major)
+        return self.__class__(matrix)
+
 
     def scl(self, a):
         a_float = float(a)
