@@ -1,8 +1,8 @@
-import math_lib
+from math_lib import Vector
 import math
 
 
-def cross_product(u: math_lib.vector, v: math_lib.vector) -> math_lib.vector:
+def cross_product(u: Vector, v: Vector) -> Vector:
     """
     Computes the cross product of two 3D vectors.
     """
@@ -12,4 +12,4 @@ def cross_product(u: math_lib.vector, v: math_lib.vector) -> math_lib.vector:
     x = math.fma(u.data[1], v.data[2], -(u.data[2] * v.data[1]))
     y = math.fma(u.data[2], v.data[0], -(u.data[0] * v.data[2]))
     z = math.fma(u.data[0], v.data[1], -(u.data[1] * v.data[0]))
-    return math_lib.vector([x, y, z])
+    return Vector([x, y, z])

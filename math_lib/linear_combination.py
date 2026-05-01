@@ -1,5 +1,5 @@
 import math
-import math_lib
+from math_lib import Vector
 
 def linear_combination(vectors, coefs):
     """
@@ -17,4 +17,4 @@ def linear_combination(vectors, coefs):
         for i in range(dim):
             # Using math.fma(a, b, c) -> (a * b) + c
             res_data[i] = math.fma(v.data[i], float(lamda_i), res_data[i])
-    return math_lib.Vector(res_data)
+    return Vector(res_data)

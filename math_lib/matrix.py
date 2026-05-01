@@ -1,5 +1,5 @@
 import math
-import math_lib
+from math_lib import Vector
 
 
 class Matrix:
@@ -32,7 +32,7 @@ class Matrix:
             for c in range(self.cols):
                 self.data[r][c] -= m.data[r][c]
 
-    def mul_vec(self, v: math_lib.vector) -> math_lib.vector:
+    def mul_vec(self, v: Vector) -> Vector:
         """
         Matrix-Vector Multiplication: O(rows * cols)
         """
@@ -43,7 +43,7 @@ class Matrix:
             for c in range(self.cols):
                 # Row-major access: [row][col]
                 res_data[r] = math.fma(self.data[r][c], v.data[c], res_data[r])
-        return math_lib.vector(res_data)
+        return Vector(res_data)
 
     def mul_mat(self, m: 'Matrix') -> 'Matrix':
         """
@@ -81,8 +81,8 @@ class Matrix:
         """
         # Original shape: (rows, cols) and new shape: (cols, rows)
         new_data = [
-            [self.data[c][r] for c in range(self.cols)
-                            for r in range(self.rows)]
+            [self.data[r][c] for r in range(self.rows)
+                            for c in range(self.cols)]
         ]
         return self.__class__(new_data)
 
@@ -95,7 +95,7 @@ class Matrix:
         num_cols = len(matrix[0]) if num_rows > 0 else 0
         pivot_row = 0
         for pivot_col in range(num_cols):
-            if pivot_row >= num_cols:
+            if pivot_row >= num_rows:
                 break
             # Step 1: Find the best row for this pivot (Partial Pivoting)
             sel_row = pivot_row
@@ -120,6 +120,42 @@ class Matrix:
             pivot_row += 1
         return self.__class__(matrix)
 
+    def determinant(self) -> float:
+        if not self.is_square():
+            raise ValueError("Determinant can only be calculated for square matrices.")
+        if self.rows == 0:
+            return 1.0
+        if self.rows == 1:
+            return float(self.data[0][0])
+        if self.rows == 2:
+            # ad - bc
+            return float(self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0])
+        # For 3x3 & 4x4, we use the row reduction method
+        matrix = [row[:] for row in self.data]
+        n = self.rows
+        det = 1.0
+        for i in range(n):
+            # 1. Pivot Selection (Partial Pivoting)
+            pivot = i
+            for j in range(i + 1, n):
+                if abs(matrix[j][i]) > abs(matrix[pivot][i]):
+                    pivot = j
+            # If we swap rows, the determinant flips sign
+            if pivot != i:
+                matrix[i], matrix[pivot] = matrix[pivot], matrix[i]
+                det *= -1
+            # If the diagonal element is 0, the determinant is 0
+            if abs(matrix[i][j]) < 1e-9:
+                return 0.0
+            # 2. Elimination (No need to normalize the row to 1.0)
+            # Just zero out everything below the diagonal
+            for j in range(i + 1, n):
+                factor = matrix[j][i] / matrix[i][j]
+                for k in range(i + 1, n):
+                    matrix[j][k] -= factor * matrix[i][k]
+            # 3. Multiply the determinant by the diagonal element.
+            det *= matrix[i][i]
+        return det
 
     def scl(self, a):
         a_float = float(a)
