@@ -145,17 +145,54 @@ class Matrix:
                 matrix[i], matrix[pivot] = matrix[pivot], matrix[i]
                 det *= -1
             # If the diagonal element is 0, the determinant is 0
-            if abs(matrix[i][j]) < 1e-9:
+            if abs(matrix[i][i]) < 1e-9:
                 return 0.0
             # 2. Elimination (No need to normalize the row to 1.0)
             # Just zero out everything below the diagonal
             for j in range(i + 1, n):
-                factor = matrix[j][i] / matrix[i][j]
+                factor = matrix[j][i] / matrix[i][i]
                 for k in range(i + 1, n):
                     matrix[j][k] -= factor * matrix[i][k]
             # 3. Multiply the determinant by the diagonal element.
             det *= matrix[i][i]
         return det
+
+    def inverse(self) -> 'Matrix':
+        if not self.is_square():
+            raise ValueError("Only square matrices have a inverse.")
+        n = self.rows
+        # Create the augmented matrix [A | I]
+        # Space complexity: O(n^2)
+        aug = []
+        for i in range(n):
+            identity_row = [1.0 if j == i else 0.0 for j in range(n)]
+            # Row-major: self.data[i] is the row
+            aug.append([float(x) for x in self.data[i] + identity_row])
+        # Gauss-Jordan Elimination
+        for i in range(n):
+            # 1. Partial Pivoting (for numeric stability)
+            pivot = i
+            for j in range(i + 1, n):
+                if abs(aug[j][i]) > abs(aug[pivot][i]):
+                    pivot = j
+            aug[i], aug[pivot] = aug[pivot], aug[i]
+            # 2. Check for singularity
+            if abs(aug[i][i]) < 1e-10:
+                raise ValueError("Matrix is singular and cannot be inverted.")
+            # 3. Normalize pivot row to 1
+            pivot_val = aug[i][i]
+            for j in range(i, 2 * n):
+                aug[i][j] /= pivot_val
+            # 4. Eliminate other rows (Above and Below)
+            for j in range(n):
+                if i != j:
+                    factor = aug[j][i]
+                    # Applying fused multiply-add: aug[j][k] = (-factor * aug[i][k]) + aug[j][k]
+                    for k in range(i, 2 * n):
+                        aug[j][k] = math.fma(-factor, aug[i][k], aug[j][k])
+        # Extract the right side [I | A^-1]
+        inv_data = [row[n:] for row in aug]
+        return self.__class__(inv_data)
 
     def scl(self, a):
         a_float = float(a)

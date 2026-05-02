@@ -65,23 +65,73 @@ def test_rref():
         [0., 0., 1.],
     ])
     print("Identity 3x3:")
-    print(m1.row_echelon())
+    print(m1.row_echelon(), end="\n\n")
     m2 = Matrix([
         [1., 2.],
         [3., 4.]
     ])
-    print(m2.row_echelon())
+    print(m2.row_echelon(), end="\n\n")
     m3 = Matrix([
         [1., 2.],
         [2., 4.]
     ])
-    print(m3.row_echelon())
+    print(m3.row_echelon(), end="\n\n")
     m4 = Matrix([
         [8.0, 5.0, -2.0, 4.0, 28.0],
         [4.0, 2.5, 20.0, 4.0, -4.0],
         [8.0, 5.0, 1.0, 4.0, 17.0]
     ])
     print(m4.row_echelon())
+
+def test_determinant():
+    print("--- Exercise 11: Determinant ---")
+    u1 = Matrix([
+        [1., -1.],
+        [-1., 1.]
+    ])
+    print(u1.determinant(), end="\n\n")
+    u2 = Matrix([
+        [2.0, 0., 0.],
+        [0., 2., 0.],
+        [0., 0., 2.],
+    ])
+    print(u2.determinant(), end="\n\n")
+    u3 = Matrix([
+        [8., 5., -2.],
+        [4., 7., 20.],
+        [7., 6., 1.],
+    ])
+    print(u3.determinant(), end="\n\n")
+    u4 = Matrix([
+        [8., 5., -2., 4.],
+        [4., 2.5, 20., 4.],
+        [8., 5., 1., 4.],
+        [28., -4., 17., 1.],
+    ])
+    print(u4.determinant(), end="\n\n")
+
+def test_inverse():
+    print("--- Exercise 12: Inverse ---")
+    u1 = Matrix([
+        [1., 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.],
+    ])
+    print(u1.inverse(), end="\n\n")
+    print
+    u2 = Matrix([
+        [2.0, 0.0, 0.0],
+        [0., 2., 0.],
+        [0., 0., 2.],
+    ])
+    print(u2.inverse(), end="\n\n")
+    u3 = Matrix([
+        [8., 5., -2.],
+        [4., 7., 20.],
+        [7., 6., 1.],
+    ])
+    print(u3.inverse())
+
 
 # def main():
 #     print("---Vector Addition---")
@@ -104,3 +154,5 @@ if __name__ == "__main__":
     test_trace()
     test_transpose()
     test_rref()
+    test_determinant()
+    test_inverse()
