@@ -132,6 +132,27 @@ def test_inverse():
     ])
     print(u3.inverse())
 
+def test_rank():
+    print("--- Exercise 13: Rank ---")
+    u1 = Matrix([
+        [1.0, 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.]
+    ])
+    print(u1.rank())
+    u2 = Matrix([
+        [1., 2., 0., 0.],
+        [2., 4., 0., 0.],
+        [-1., 2., 1., 1.]
+    ])
+    print(u2.rank())
+    u3 = Matrix([
+        [8., 5., -2.],
+        [4., 7., 20.],
+        [7., 6., 1.],
+        [21., 18., 7.]
+    ])
+    print(u3.rank())
 
 # def main():
 #     print("---Vector Addition---")
@@ -156,3 +177,4 @@ if __name__ == "__main__":
     test_rref()
     test_determinant()
     test_inverse()
+    test_rank()

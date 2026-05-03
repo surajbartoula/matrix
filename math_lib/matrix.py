@@ -194,6 +194,17 @@ class Matrix:
         inv_data = [row[n:] for row in aug]
         return self.__class__(inv_data)
 
+    def rank(self) -> int:
+        rref_matrix = self.row_echelon()
+        rank_count = 0
+        # Count how many rows are not all zeros
+        for row in rref_matrix.data:
+            # Check if any element in the row is significantly
+            # different from zero
+            if any(abs(elem) > 1e-9 for elem in row):
+                rank_count += 1
+        return rank_count
+
     def scl(self, a):
         a_float = float(a)
         for r in range(self.rows):
