@@ -11,3 +11,4 @@ from .cross_product import cross_product
 from .lerp import lerp
 from .linear_combination import linear_combination
 from .cos import angle_cos
+from .projection import projection
