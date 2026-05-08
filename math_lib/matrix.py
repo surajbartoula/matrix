@@ -116,7 +116,8 @@ class Matrix:
                 if r != pivot_row:
                     factor = matrix[r][pivot_col]
                     for c in range(pivot_col, num_cols):
-                        matrix[r][c] -= factor * matrix[pivot_row][c]
+                        # matrix[r][c] -= factor * matrix[pivot_row][c]
+                        matrix[r][c] = math.fma(-factor, matrix[pivot_row][c], matrix[r][c])
             pivot_row += 1
         return self.__class__(matrix)
 
@@ -129,7 +130,8 @@ class Matrix:
             return float(self.data[0][0])
         if self.rows == 2:
             # ad - bc
-            return float(self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0])
+            # return float(self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0])
+            return math.fma(self.data[0][0], self.data[1][1], -(self.data[0][1] * self.data[1][0]))
         # For 3x3 & 4x4, we use the row reduction method
         matrix = [row[:] for row in self.data]
         n = self.rows
@@ -152,7 +154,8 @@ class Matrix:
             for j in range(i + 1, n):
                 factor = matrix[j][i] / matrix[i][i]
                 for k in range(i + 1, n):
-                    matrix[j][k] -= factor * matrix[i][k]
+                    # matrix[j][k] -= factor * matrix[i][k]
+                    matrix[j][k] = math.fma(-factor, matrix[i][k], matrix[j][k])
             # 3. Multiply the determinant by the diagonal element.
             det *= matrix[i][i]
         return det
