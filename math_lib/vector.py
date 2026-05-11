@@ -33,7 +33,7 @@ class Vector:
         res = 0.0
         for i in range(self.size):
             res = math.fma(self.data[i], v.data[i], res)
-        return res
+        return round(res, 1)
 
     def norm_1(self) -> float:
         """
@@ -42,7 +42,7 @@ class Vector:
         res = 0.0
         for x in self.data:
             res += abs(x)
-        return res
+        return round(res, 1)
 
     def norm(self) -> float:
         """
@@ -55,7 +55,7 @@ class Vector:
             # x^2 + sum_sq using fused multiply-add
             sum_sq = math.fma(x, x, sum_sq)
         # Square root using pow(x, 0.5)
-        return math.pow(sum_sq, 0.5)
+        return round(math.pow(sum_sq, 0.5), 1)
 
     def norm_inf(self) -> float:
         """
@@ -67,8 +67,8 @@ class Vector:
         for x in self.data:
             #max(current_max, absolute_value)
             res = max(res, abs(x))
-        return res
+        return round(res, 1)
 
     def __str__(self):
-        # Formatting to match the column-style output
-        return "[" + " ".join([f"{x}" for x in self.data]) + "]"
+        formatted_data = [f"{x:.1f}" for x in self.data]
+        return "[" + " ".join(formatted_data) + "]"

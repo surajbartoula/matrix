@@ -15,4 +15,4 @@ def angle_cos(u: math_lib.vector, v: math_lib.vector) -> float:
     #If a vector is zero, the angle is undefined
     if norm_u == 0.0 or norm_v == 0.0:
         return 0.0
-    return dot_prod / (norm_u * norm_v)
+    return round(dot_prod / (norm_u * norm_v), 1)

@@ -71,7 +71,7 @@ class Matrix:
         res = 0.0
         for i in range(self.rows):
             res += self.data[i][i]
-        return res
+        return round(res, 1)
 
     def transpose(self) -> 'Matrix':
         """
@@ -218,7 +218,8 @@ class Matrix:
         return self.rows == self.cols
 
     def __str__(self):
-        res = ""
+        rows = []
         for row in self.data:
-            res += f"[{', '.join(map(str, row))}]\n"
-        return res.strip()
+            formatted_row = [f"{x:.1f}" for x in row]
+            rows.append("[" + ",".join(formatted_row) + "]")
+        return "\n".join(rows)
