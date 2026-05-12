@@ -56,10 +56,10 @@ def test_linear_combination():
 
 def test_lerp():
     print("--- Lerp ---")
-    print(lerp(0., 1., 0.))
-    print(lerp(0., 1., 1.))
-    print(lerp(0., 1., 0.5))
-    print(lerp(21., 42., 0.3))
+    print(f"{lerp(0., 1., 0.):.1f}")
+    print(f"{lerp(0., 1., 1.):.1f}")
+    print(f"{lerp(0., 1., 0.5):.1f}")
+    print(f"{lerp(21., 42., 0.3):.1f}")
     print(lerp(Vector([2., 1.]), Vector([4., 2.]), 0.3))
     print(lerp(Matrix([[2., 1.], [3., 4.]]), Matrix([[20., 10.], [30., 40.]]), 0.5))
 
@@ -80,9 +80,9 @@ def test_norm():
     u = Vector([0., 0., 0.])
     print(u.norm_1(), u.norm(), u.norm_inf())
     u = Vector([1., 2., 3.])
-    print(u.norm_1(), u.norm(), u.norm_inf())
+    print(u.norm_1(), f"{u.norm():.9f}", u.norm_inf())
     u = Vector([-1., -2.])
-    print(u.norm_1(), u.norm(), u.norm_inf())
+    print(u.norm_1(), f"{u.norm():.9f}", u.norm_inf())
 
 def test_cosine():
     print("--- Cosine ---")
@@ -94,24 +94,24 @@ def test_cosine():
     print(angle_cos(u, v))
     u = Vector([-1., 1.])
     v = Vector([1., -1.])
-    print(angle_cos(u, v))
+    print(f"{angle_cos(u, v):.1f}")
     u = Vector([2., 1.])
     v = Vector([4., 2.])
-    print(angle_cos(u, v))
+    print(f"{angle_cos(u, v):.1f}")
     u = Vector([1., 2., 3.])
     v = Vector([4., 5., 6.])
-    print(angle_cos(u, v))
+    print(f"{angle_cos(u, v):.9f}")
 
 def test_cross_product():
     print("--- Exercise 06: Cross Product ---")
     u1, v1 = Vector([0., 0., 1.]), Vector([1., 0., 0.])
-    print(f"u1 X v1 = {cross_product(u1, v1)}")
+    print(f"{cross_product(u1, v1)}", end="\n\n")
 
     u2, v2 = Vector([1., 2., 3.]), Vector([4., 5., 6.])
-    print(f"u2 X v2 = {cross_product(u2, v2)}")
+    print(f"{cross_product(u2, v2)}", end="\n\n")
 
     u3, v3 = Vector([4., 2., -3.]), Vector([-2., -5., 16.])
-    print(f"u3 X v3 = {cross_product(u3, v3)}")
+    print(f"{cross_product(u3, v3)}")
 
 def test_matrix_multipication():
     print("--- Matrix Multiplication ---")
@@ -120,19 +120,19 @@ def test_matrix_multipication():
         [0., 1.]
     ])
     v = Vector([4., 2.])
-    print(u.mul_vec(v))
+    print(u.mul_vec(v), end="\n\n")
     u = Matrix([
         [2., 0.],
         [0., 2.],
     ])
     v = Vector([4., 2.])
-    print(u.mul_vec(v))
+    print(u.mul_vec(v), end="\n\n")
     u = Matrix([
         [2., -2],
         [-2., 2]
     ])
     v = Vector([4., 2.])
-    print(u.mul_vec(v))
+    print(u.mul_vec(v), end="\n\n")
     u = Matrix([
         [1., 0.],
         [0., 1.]
@@ -141,7 +141,7 @@ def test_matrix_multipication():
         [1., 0.],
         [0., 1.]
     ])
-    print(u.mul_mat(v))
+    print(u.mul_mat(v), end="\n\n")
     u = Matrix([
         [1., 0.],
         [0., 1.]
@@ -150,7 +150,7 @@ def test_matrix_multipication():
         [2., 1.],
         [4., 2.]
     ])
-    print(u.mul_mat(v))
+    print(u.mul_mat(v), end="\n\n")
     u = Matrix([
         [3., -5.],
         [6., 8.]
