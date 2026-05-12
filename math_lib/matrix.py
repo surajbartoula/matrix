@@ -71,7 +71,7 @@ class Matrix:
         res = 0.0
         for i in range(self.rows):
             res += self.data[i][i]
-        return round(res, 1)
+        return res
 
     def transpose(self) -> 'Matrix':
         """

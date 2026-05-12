@@ -15,7 +15,7 @@ def lerp(u, v, t: float):
     #Case 1: Scalars
     if isinstance(u, (int, float)) and isinstance(v, (int, float)):
         res = math.fma(t, float(v), (1.0 - t) * float(u))
-        return round(res, 1)
+        return res
     #Case 2: Vectors
     if isinstance(u, Vector) and isinstance(v, Vector):
         if u.size != v.size:
