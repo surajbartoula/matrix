@@ -221,5 +221,5 @@ class Matrix:
         rows = []
         for row in self.data:
             formatted_row = [f"{x:.1f}" for x in row]
-            rows.append("[" + ",".join(formatted_row) + "]")
+            rows.append("[" + ", ".join(formatted_row) + "]")
         return "\n".join(rows)
