@@ -280,7 +280,7 @@ def test_inverse():
         [4., 7., 20.],
         [7., 6., 1.],
     ])
-    print(u3.inverse())
+    print(f"{u3.inverse():.9f}")
 
 def test_rank():
     print("--- Exercise 13: Rank ---")
