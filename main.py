@@ -60,7 +60,8 @@ def test_lerp():
     print(f"{lerp(0., 1., 1.):.1f}")
     print(f"{lerp(0., 1., 0.5):.1f}")
     print(f"{lerp(21., 42., 0.3):.1f}")
-    print(lerp(Vector([2., 1.]), Vector([4., 2.]), 0.3))
+    res = lerp(Vector([2., 1.]), Vector([4., 2.]), 0.3)
+    print(f"{res:.1f}")
     print(lerp(Matrix([[2., 1.], [3., 4.]]), Matrix([[20., 10.], [30., 40.]]), 0.5))
 
 def test_dot_product():

@@ -220,6 +220,12 @@ class Matrix:
     def __str__(self):
         rows = []
         for row in self.data:
-            formatted_row = [f"{x:.1f}" for x in row]
+            formatted_row = [f"{x}" for x in row]
             rows.append("[" + ", ".join(formatted_row) + "]")
         return "\n".join(rows)
+
+    def __format__(self, format_spec):
+        return "\n".join(
+            "[" + ", ".join(format(x, format_spec) for x in row) + "]"
+            for row in self.data
+        )

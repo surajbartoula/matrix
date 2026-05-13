@@ -70,5 +70,8 @@ class Vector:
         return res
 
     def __str__(self):
-        rows = [f"[{x:.1f}]" for x in self.data]
+        rows = [f"[{x}]" for x in self.data]
         return "\n".join(rows)
+
+    def __format__(self, format_spec):
+        return "\n".join(f"[{format(x, format_spec)}]" for x in self.data)
