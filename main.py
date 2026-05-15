@@ -8,5 +8,6 @@ def run_all():
     run_matrix_test()
     run_math_test()
 
+
 if __name__ == "__main__":
     run_all()

@@ -1,6 +1,7 @@
 import math
 from math_lib import Vector
 
+
 def linear_combination(vectors, coefs):
     """
     Computes the linear combination of a list of vectors.

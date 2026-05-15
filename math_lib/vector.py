@@ -1,5 +1,6 @@
 import math
 
+
 class Vector:
     def __init__(self, data):
         # Data is a list of floats (K)
@@ -29,7 +30,8 @@ class Vector:
         Returns a scalar (float).
         """
         if self.size != v.size:
-            raise ValueError("Vectors must be of the same dimension for a dot product.")
+            msg = "Vectors must be of the same dimension for a dot product."
+            raise ValueError(msg)
         res = 0.0
         for i in range(self.size):
             res = math.fma(self.data[i], v.data[i], res)
@@ -65,7 +67,7 @@ class Vector:
             return 0.0
         res = 0.0
         for x in self.data:
-            #max(current_max, absolute_value)
+            # max(current_max, absolute_value)
             res = max(res, abs(x))
         return res
 

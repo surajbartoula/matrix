@@ -9,12 +9,14 @@ class Matrix:
             self.rows = 0
             self.cols = 0
         else:
-            # data is a list of lists: [[row1_col1, row1_col2], [row2_col1, row2_col2]]
+            # data is a list of lists:
+            # [[row1_col1, row1_col2], [row2_col1, row2_col2]]
             self.rows = len(data)
             self.cols = len(data[0])
             for i in range(self.rows):
                 if len(data[i]) != self.cols:
-                    raise ValueError(f"Row {i} has {len(data[i])} columns, expected {self.cols}")
+                    msg = f"Row {i}: expected {self.cols} cols"
+                    raise ValueError(msg)
             self.data = [[float(item) for item in row] for row in data]
         self.shape = (self.rows, self.cols)
 
@@ -82,7 +84,7 @@ class Matrix:
         # Original shape: (rows, cols) and new shape: (cols, rows)
         new_data = [
             [self.data[r][c] for r in range(self.rows)
-                            for c in range(self.cols)]
+                for c in range(self.cols)]
         ]
         return self.__class__(new_data)
 
@@ -90,7 +92,7 @@ class Matrix:
         """
         Computes the Reduced Row Echelon Form(RREF): O(n^3)
         """
-        matrix = [row[:] for row in self.data] # Deep copy of matrix
+        matrix = [row[:] for row in self.data]  # Deep copy of matrix
         num_rows = len(matrix)
         num_cols = len(matrix[0]) if num_rows > 0 else 0
         pivot_row = 0
@@ -107,7 +109,8 @@ class Matrix:
             if abs(matrix[sel_row][pivot_col]) < 1e-9:
                 continue
             # Swap current row with sel_row
-            matrix[pivot_row], matrix[sel_row] = matrix[sel_row], matrix[pivot_row]
+            matrix[pivot_row], matrix[sel_row] = matrix[sel_row],
+            matrix[pivot_row]
             # Step 2: Normalize pivot row(Leading entry becomes 1)
             pivot_val = matrix[pivot_row][pivot_col]
             matrix[pivot_row] = [x / pivot_val for x in matrix[pivot_row]]
@@ -117,21 +120,28 @@ class Matrix:
                     factor = matrix[r][pivot_col]
                     for c in range(pivot_col, num_cols):
                         # matrix[r][c] -= factor * matrix[pivot_row][c]
-                        matrix[r][c] = math.fma(-factor, matrix[pivot_row][c], matrix[r][c])
+                        matrix[r][c] = math.fma(
+                            -factor, matrix[pivot_row][c], matrix[r][c]
+                            )
             pivot_row += 1
         return self.__class__(matrix)
 
     def determinant(self) -> float:
         if not self.is_square():
-            raise ValueError("Determinant can only be calculated for square matrices.")
+            msg = "Determinant can only be calculated for square matrices."
+            raise ValueError(msg)
         if self.rows == 0:
             return 1.0
         if self.rows == 1:
             return float(self.data[0][0])
         if self.rows == 2:
             # ad - bc
-            # return float(self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0])
-            return math.fma(self.data[0][0], self.data[1][1], -(self.data[0][1] * self.data[1][0]))
+            # return float(self.data[0][0] * self.data[1][1]
+            # - self.data[0][1] * self.data[1][0])
+            return math.fma(
+                self.data[0][0], self.data[1][1],
+                -(self.data[0][1] * self.data[1][0])
+                )
         # For 3x3 & 4x4, we use the row reduction method
         matrix = [row[:] for row in self.data]
         n = self.rows
@@ -155,7 +165,9 @@ class Matrix:
                 factor = matrix[j][i] / matrix[i][i]
                 for k in range(i + 1, n):
                     # matrix[j][k] -= factor * matrix[i][k]
-                    matrix[j][k] = math.fma(-factor, matrix[i][k], matrix[j][k])
+                    matrix[j][k] = math.fma(
+                        -factor, matrix[i][k], matrix[j][k]
+                        )
             # 3. Multiply the determinant by the diagonal element.
             det *= matrix[i][i]
         return det
@@ -190,7 +202,8 @@ class Matrix:
             for j in range(n):
                 if i != j:
                     factor = aug[j][i]
-                    # Applying fused multiply-add: aug[j][k] = (-factor * aug[i][k]) + aug[j][k]
+                    # Applying fused multiply-add: aug[j][k]
+                    # = (-factor * aug[i][k]) + aug[j][k]
                     for k in range(i, 2 * n):
                         aug[j][k] = math.fma(-factor, aug[i][k], aug[j][k])
         # Extract the right side [I | A^-1]

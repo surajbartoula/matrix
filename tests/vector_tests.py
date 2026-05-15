@@ -30,6 +30,7 @@ def test_dot_product():
     v = Vector([3., 2.])
     print(u.dot(v))
 
+
 def test_norm():
     print("--- Norm ---")
     u = Vector([0., 0., 0.])
@@ -38,6 +39,7 @@ def test_norm():
     print(u.norm_1(), f"{u.norm():.9f}", u.norm_inf())
     u = Vector([-1., -2.])
     print(u.norm_1(), f"{u.norm():.9f}", u.norm_inf())
+
 
 def test_cosine():
     print("--- Cosine ---")
@@ -57,6 +59,7 @@ def test_cosine():
     v = Vector([4., 5., 6.])
     print(f"{angle_cos(u, v):.9f}")
 
+
 def test_cross_product():
     print("--- Exercise 06: Cross Product ---")
     u1, v1 = Vector([0., 0., 1.]), Vector([1., 0., 0.])
@@ -68,10 +71,10 @@ def test_cross_product():
     u3, v3 = Vector([4., 2., -3.]), Vector([-2., -5., 16.])
     print(f"{cross_product(u3, v3)}")
 
+
 def run_vector_test():
     vector_operations()
     test_dot_product()
     test_norm()
     test_cosine()
     test_cross_product()
-

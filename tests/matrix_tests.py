@@ -30,6 +30,7 @@ def matrix_opertations():
     u.scl(2.)
     print(u)
 
+
 def test_matrix_multipication():
     print("--- Matrix Multiplication ---")
     u = Matrix([
@@ -78,6 +79,7 @@ def test_matrix_multipication():
     ])
     print(u.mul_mat(v))
 
+
 def test_trace():
     print("--- Exercise 08: Trace ---")
     u1 = Matrix([
@@ -99,6 +101,7 @@ def test_trace():
         [4., 4., 4.]
     ])
     print(f"Example 3: {u3.trace()}")
+
 
 def test_transpose():
     print("--- Exercise 09: Transpose ---")
@@ -122,6 +125,7 @@ def test_transpose():
     print("Transpose (Should be 3x2):")
     print(t2)
     print(f"New shape: {t2.shape}")
+
 
 def test_rref():
     print("--- Exercise 10: RREF (Row-Major) ---")
@@ -148,6 +152,7 @@ def test_rref():
         [8.0, 5.0, 1.0, 4.0, 17.0]
     ])
     print(m4.row_echelon())
+
 
 def test_determinant():
     print("--- Exercise 11: Determinant ---")
@@ -176,6 +181,7 @@ def test_determinant():
     ])
     print(u4.determinant(), end="\n\n")
 
+
 def test_inverse():
     print("--- Exercise 12: Inverse ---")
     u1 = Matrix([
@@ -198,6 +204,7 @@ def test_inverse():
     ])
     print(f"{u3.inverse():.9f}")
 
+
 def test_rank():
     print("--- Exercise 13: Rank ---")
     u1 = Matrix([
@@ -219,6 +226,7 @@ def test_rank():
         [21., 18., 7.]
     ])
     print(u3.rank())
+
 
 def run_matrix_test():
     matrix_opertations()
