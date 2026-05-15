@@ -109,8 +109,9 @@ class Matrix:
             if abs(matrix[sel_row][pivot_col]) < 1e-9:
                 continue
             # Swap current row with sel_row
-            matrix[pivot_row], matrix[sel_row] = matrix[sel_row],
-            matrix[pivot_row]
+            matrix[pivot_row], matrix[sel_row] = (
+                matrix[sel_row], matrix[pivot_row]
+                )
             # Step 2: Normalize pivot row(Leading entry becomes 1)
             pivot_val = matrix[pivot_row][pivot_col]
             matrix[pivot_row] = [x / pivot_val for x in matrix[pivot_row]]
