@@ -53,7 +53,7 @@ class Matrix:
         """
         if self.cols != m.rows:
             raise ValueError("Matrix A columns must match Matrix B rows.")
-        # Initialize new_data in column-major: list of columns
+        # Initialize given matrix in row-major
         new_data = [[0.0 for _ in range(m.cols)] for _ in range(self.rows)]
         for r in range(self.rows):
             for c in range(m.cols):
