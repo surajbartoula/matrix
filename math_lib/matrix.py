@@ -83,8 +83,8 @@ class Matrix:
         """
         # Original shape: (rows, cols) and new shape: (cols, rows)
         new_data = [
-            [self.data[r][c] for r in range(self.rows)
-                for c in range(self.cols)]
+            [self.data[r][c] for r in range(self.rows)]
+                for c in range(self.cols)
         ]
         return self.__class__(new_data)
 
